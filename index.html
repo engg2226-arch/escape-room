@@ -94,10 +94,6 @@ input[type="text"]{
   margin-top:20px;
 }
 
-.meeting-btn:hover{
-  transform:translateX(calc(-20px + 40px * Math.random()));
-}
-
 #typingText{white-space:pre-line;}
 </style>
 </head>
@@ -175,7 +171,6 @@ function checkMCQ1(){
   else alert('Arre nahi yaar 😛 phir se try karo');
 }
 
-/* ✅ FINAL FIXED ANSWER FUNCTION */
 function checkAnswer(room, correct){
   const input=document.getElementById('answer'+room);
   if(!input) return;
@@ -218,7 +213,6 @@ Asli maksad toh aapko surprise dena tha`;
   },speed);
 }
 
-/* 🤡 APRIL FOOL PRANK */
 function startPrank(){
   const text=document.getElementById('prankText');
   const btn=document.querySelector('.meeting-btn');
@@ -228,7 +222,7 @@ function startPrank(){
 
   setTimeout(()=>text.textContent='Almost there... bas thoda sa patience',2000);
   setTimeout(()=>text.textContent='February me APRIL FOOL banayaaaaaa\nSurprise toh tha hi waise ye 😌',4000);
-
+}
 </script>
 </body>
 </html>
