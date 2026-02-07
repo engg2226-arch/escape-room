@@ -33,21 +33,10 @@ body{
   border-radius:22px;
   padding:22px;
   box-shadow:0 25px 60px rgba(0,0,0,.5);
-  animation:float 4s ease-in-out infinite;
 }
 
-@keyframes float{
-  0%,100%{transform:translateY(0)}
-  50%{transform:translateY(-6px)}
-}
-
-.room{display:none;animation:fadeIn .6s ease;}
+.room{display:none;}
 .room.active{display:block;}
-
-@keyframes fadeIn{
-  from{opacity:0;transform:translateY(15px)}
-  to{opacity:1;transform:translateY(0)}
-}
 
 h1,h2{text-align:center;}
 p{text-align:center;color:var(--muted);line-height:1.5;}
@@ -63,10 +52,8 @@ button{
   font-size:16px;
   font-weight:700;
   cursor:pointer;
-  transition:.3s;
 }
 
-button:hover{transform:scale(1.03)}
 button.joke:hover{transform:translateX(14px)}
 
 input[type="radio"]{
@@ -89,10 +76,7 @@ input[type="text"]{
   color:#ffd1e5;
 }
 
-.meeting-btn{
-  display:none;
-  margin-top:20px;
-}
+.meeting-btn{display:none;}
 
 #typingText{white-space:pre-line;}
 </style>
@@ -108,7 +92,7 @@ input[type="text"]{
     Welcome my monkey🖤<br>
     You can't escape from me.... so today, we have: Escape Loom Game – Only for my cutie❤️
   </p>
-  <button type="button" onclick="goToRoom1()">Start Game 😏</button>
+  <button id="startBtn">Start Game 😏</button>
 </div>
 
 <!-- ROOM 1 -->
@@ -120,7 +104,7 @@ input[type="text"]{
   <label><input type="radio" name="q1" value="study"> Study (Bhaagoooooo)</label><br><br>
   <label><input type="radio" name="q1" value="gym"> Gim</label>
 
-  <button type="button" class="joke" onclick="checkMCQ1()">Room Unlock Karo</button>
+  <button class="joke" id="mcqBtn">Room Unlock Karo</button>
   <div class="hint">Hint: Isme mao ne think nahi kia...warna uske knees me pain hone lagta na</div>
 </div>
 
@@ -130,8 +114,7 @@ input[type="text"]{
   <p>Pressure badh raha hai 😏 Dimag lagao</p>
   <p><strong>Puzzle 2:</strong> Wo konsa song tha jispe guard ne aapko dance karte dekha tha aur sharma ke chala gaya tha?</p>
   <input id="answer2" placeholder="Soch ke likho…">
-  <button type="button" onclick="checkAnswer(2,'Shut up and bounce')">Yayayay yaad aaya</button>
-  <div class="hint">Hint: Ab toh baaton me rakha kya hai??????</div>
+  <button id="room2Btn">Yayayay yaad aaya</button>
 </div>
 
 <!-- ROOM 3 -->
@@ -140,89 +123,65 @@ input[type="text"]{
   <p>Bas last cutie💖</p>
   <p><strong>Puzzle 3:</strong> Me aapke ghar chhupke se aagya toh aap kya karoge?</p>
   <input id="answer3" placeholder="Final answer…">
-  <button type="button" onclick="checkAnswer(3,'Chijji dunga')">Final Door Unlock Karo</button>
-  <div class="hint">Hint: Chijjii chahiye</div>
+  <button id="room3Btn">Final Door Unlock Karo</button>
 </div>
 
 <!-- FINAL -->
 <div class="room" id="final">
   <h2>🎉 CONGRATULATIONS 🎉</h2>
   <p id="typingText"></p>
-
-  <button type="button" class="meeting-btn" onclick="startPrank()">
-    👉 Yahan click karo, surprise aapka wait kar raha hai
-  </button>
-
+  <button class="meeting-btn" id="prankBtn">👉 Yahan click karo</button>
   <p id="prankText"></p>
 </div>
 
 </div>
 
 <script>
-function goToRoom1(){
-  document.getElementById('intro').classList.remove('active');
-  document.getElementById('room1').classList.add('active');
-}
+document.addEventListener('DOMContentLoaded',()=>{
 
-function checkMCQ1(){
-  const options=[...document.getElementsByName('q1')];
-  const selected=options.find(o=>o.checked)?.value;
-  if(selected==='uska monkey') switchRoom(1,2);
-  else alert('Arre nahi yaar 😛 phir se try karo');
-}
+  const show=(id)=>{
+    document.querySelectorAll('.room').forEach(r=>r.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+  };
 
-function checkAnswer(room, correct){
-  const input=document.getElementById('answer'+room);
-  if(!input) return;
+  document.getElementById('startBtn').onclick=()=>show('room1');
 
-  const userAnswer=input.value.trim().toLowerCase().replace(/\s+/g,' ');
-  const correctAnswer=correct.trim().toLowerCase();
+  document.getElementById('mcqBtn').onclick=()=>{
+    const selected=[...document.getElementsByName('q1')].find(o=>o.checked)?.value;
+    selected==='uska monkey' ? show('room2') : alert('Arre nahi yaar 😛 phir se try karo');
+  };
 
-  if(userAnswer===correctAnswer){
-    room<3 ? switchRoom(room,room+1) : showFinal();
-  }else{
-    alert('Galat 😛 dobara socho');
-  }
-}
+  document.getElementById('room2Btn').onclick=()=>{
+    const a=document.getElementById('answer2').value.trim().toLowerCase().replace(/\s+/g,' ');
+    a==='shut up and bounce' ? show('room3') : alert('Galat 😛');
+  };
 
-function switchRoom(from,to){
-  document.getElementById('room'+from).classList.remove('active');
-  document.getElementById('room'+to).classList.add('active');
-}
+  document.getElementById('room3Btn').onclick=()=>{
+    const a=document.getElementById('answer3').value.trim().toLowerCase().replace(/\s+/g,' ');
+    if(a!=='chijji dunga') return alert('Galat 😛');
 
-function showFinal(){
-  document.getElementById('room3').classList.remove('active');
-  document.getElementById('final').classList.add('active');
-
-  const text=`YAYAYYAYAYAYAY💖
+    show('final');
+    const text=`YAYAYYAYAYAYAY💖
 
 Ye escape room toh sirf bahana tha.
 Asli maksad toh aapko surprise dena tha`;
+    let i=0;
+    const el=document.getElementById('typingText');
+    const t=setInterval(()=>{
+      el.textContent+=text[i++];
+      if(i===text.length){
+        clearInterval(t);
+        document.getElementById('prankBtn').style.display='block';
+      }
+    },90);
+  };
 
-  let i=0;
-  const el=document.getElementById('typingText');
-  const speed=90;
+  document.getElementById('prankBtn').onclick=()=>{
+    document.getElementById('prankText').textContent=
+      'FEBRUARY ME APRIL FOOL BANAYAAAAA 🤡💖 Surprise toh tha hi ye waise 😌';
+  };
 
-  const typing=setInterval(()=>{
-    el.textContent+=text.charAt(i);
-    i++;
-    if(i===text.length){
-      clearInterval(typing);
-      document.querySelector('.meeting-btn').style.display='block';
-    }
-  },speed);
-}
-
-function startPrank(){
-  const text=document.getElementById('prankText');
-  const btn=document.querySelector('.meeting-btn');
-
-  btn.style.display='none';
-  text.textContent='Connecting to surprise... ⏳';
-
-  setTimeout(()=>text.textContent='Almost there... bas thoda sa patience',2000);
-  setTimeout(()=>text.textContent='February me APRIL FOOL banayaaaaaa\nSurprise toh tha hi waise ye 😌',4000);
-}
+});
 </script>
 </body>
 </html>
