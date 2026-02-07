@@ -3,10 +3,10 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Escape Room </title>
+<title>Escape Room</title>
 
 <style>
-:root {
+:root{
   --bg:#0f1220;
   --card:#1c2040;
   --accent:#ff5fa2;
@@ -14,7 +14,7 @@
   --muted:#b6b6d6;
 }
 
-* { box-sizing:border-box; font-family:'Segoe UI',system-ui,sans-serif; }
+*{box-sizing:border-box;font-family:'Segoe UI',system-ui,sans-serif;}
 
 body{
   margin:0;
@@ -50,8 +50,8 @@ body{
   to{opacity:1; transform:translateY(0)}
 }
 
-h1,h2{text-align:center}
-p{text-align:center; color:var(--muted); line-height:1.5}
+h1,h2{text-align:center;}
+p{text-align:center;color:var(--muted);line-height:1.5;}
 
 button{
   width:100%;
@@ -67,160 +67,4 @@ button{
   transition:.3s;
 }
 
-button:hover{transform:scale(1.03)}
-button.joke:hover{transform:translateX(12px)}
-
-input[type="radio"]{
-  transform:scale(1.6);
-  margin-right:10px;
-}
-
-input[type="text"]{
-  width:100%;
-  padding:12px;
-  border-radius:12px;
-  border:none;
-  margin-top:10px;
-  font-size:16px;
-}
-
-.hint{
-  margin-top:12px;
-  font-size:14px;
-  color:#ffd1e5;
-}
-
-.final h2{color:var(--accent)}
-.meeting-link{
-  display:none;
-  margin-top:20px;
-  padding:14px;
-  border-radius:14px;
-  background:#fff;
-  color:#000;
-  text-decoration:none;
-  font-weight:700;
-}
-
-#typingText{white-space:pre-line;}
-</style>
-</head>
-
-<body>
-<div class="app">
-
-<!-- INTRO -->
-<div class="room active" id="intro">
-  <h1>🔐 Virtual Escape Room</h1>
-  <p>
-    Welcome my monkey🖤<br/>
-    You can't escape from me.... so today, we have: Escape Loom Game – Only for my cutie❤️
-  </p>
-  <button onclick="goToRoom1()">Start Game 😏</button>
-</div>
-
-<!-- ROOM 1 -->
-<div class="room" id="room1">
-  <p><strong>Puzzle 1:</strong> Mao ki favourite thing kya hai? 😏</p>
-
-  <label><input type="radio" name="q1" value="sona"> Sona</label><br/><br/>
-  <label><input type="radio" name="q1" value="uska monkey"> Uska monkey 🐒</label><br/><br/>
-  <label><input type="radio" name="q1" value="study"> Study (Bhaagoooooo)</label><br/><br/>
-  <label><input type="radio" name="q1" value="gym"> Gim</label>
-
-  <button class="joke" onclick="checkMCQ1()">Room Unlock Karo</button>
-  <div class="hint">Hint: Isme mao ne think nahi kia...warna uske knees me pain hone lagta na </div>
-</div>
-
-<!-- ROOM 2 -->
-<div class="room" id="room2">
-  <h2>🧠 Room Two</h2>
-  <p>Pressure badh raha hai 😏 Dimag lagao</p>
-  <p><strong>Puzzle 2:</strong> Wo konsa song tha jispe guard ne aapko dance karte dekha tha aur sharma ke chala gaya tha?</p>
-  <input id="answer2" placeholder="Soch ke likho…" />
-  <button onclick="checkAnswer(2,'Shut up and bounce')">Yayayay yaad aaya</button>
-  <div class="hint">Hint: Ab toh baaton me rakha kya hai??????</div>
-</div>
-
-
-<!-- ROOM 3 -->
-<div class="room" id="room3">
-  <h2>🗝️ Final Lock</h2>
-  <p>Bas last cutie💖</p>
-
-  <p><strong>Puzzle 3:</strong> Me aapke ghar chhupke se aagya toh aap kya karoge?</p>
-
-  <input id="answer3" placeholder="Final answer…" />
-  <button onclick="checkAnswer(3,'Chijji dunga')">Final Door Unlock Karo</button>
-  <div class="hint">Hint: Chijjii chahiye</div>
-</div>
-
-
-<!-- FINAL -->
-<div class="room final" id="final">
-  <h2>🎉 CONGRATULATIONS 🎉</h2>
-  <p id="typingText"></p>
-  <a href="YOUR_MEETING_LINK_HERE" target="_blank" class="meeting-link">
-    👉 Yahan click karo, surprise aapka wait kar raha hai
-  </a>
-</div>
-
-</div>
-
-<script>
-function goToRoom1(){
-  document.getElementById('intro').classList.remove('active');
-  document.getElementById('room1').classList.add('active');
-}
-
-function checkMCQ1(){
-  const options=document.getElementsByName('q1');
-  let selected='';
-  options.forEach(o=>{if(o.checked) selected=o.value});
-  if(selected==='uska monkey'){
-    switchRoom(1,2);
-  }else{
-    alert('Arre nahi yaar 😛 phir se try karo');
-  }
-}
-
-function checkAnswer(room,correct){
-  const input=document.getElementById('answer'+room);
-  if(input.value.trim().toLowerCase()===correct){
-    if(room<3) switchRoom(room,room+1);
-    else showFinal();
-  }else{
-    alert('Galat 😛 dobara socho');
-  }
-}
-
-function switchRoom(from,to){
-  document.getElementById('room'+from).classList.remove('active');
-  document.getElementById('room'+to).classList.add('active');
-}
-
-function showFinal(){
-  document.getElementById('room3').classList.remove('active');
-  document.getElementById('final').classList.add('active');
-
-  const text=`YAYAYYAYAYAYAY💖
-
-Ye escape room toh sirf bahana tha.
-Asli maksad toh aapko surprise dena tha`;
-
-  let i=0;
-  const speed=80; // SLOW typing
-  const el=document.getElementById('typingText');
-
-  const typing=setInterval(()=>{
-    el.textContent+=text.charAt(i);
-    i++;
-    if(i===text.length){
-      clearInterval(typing);
-      document.querySelector('.meeting-link').style.display='block';
-    }
-  },speed);
-}
-</script>
-</body>
-</html>
+button:hover{tra
