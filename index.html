@@ -1,13 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Escape Room</title>
 
 <style>
 :root{
-  --bg:#0f1220;
   --card:#1c2040;
   --accent:#ff5fa2;
   --text:#f5f5f5;
@@ -42,12 +41,12 @@ body{
   50%{transform:translateY(-6px)}
 }
 
-.room{display:none; animation:fadeIn .6s ease;}
+.room{display:none;animation:fadeIn .6s ease;}
 .room.active{display:block;}
 
 @keyframes fadeIn{
-  from{opacity:0; transform:translateY(15px)}
-  to{opacity:1; transform:translateY(0)}
+  from{opacity:0;transform:translateY(15px)}
+  to{opacity:1;transform:translateY(0)}
 }
 
 h1,h2{text-align:center;}
@@ -68,7 +67,7 @@ button{
 }
 
 button:hover{transform:scale(1.03)}
-button.joke:hover{transform:translateX(12px)}
+button.joke:hover{transform:translateX(14px)}
 
 input[type="radio"]{
   transform:scale(1.6);
@@ -90,18 +89,13 @@ input[type="text"]{
   color:#ffd1e5;
 }
 
-.final h2{color:var(--accent)}
-
-.meeting-link{
+.meeting-btn{
   display:none;
   margin-top:20px;
-  padding:14px;
-  border-radius:14px;
-  background:#fff;
-  color:#000;
-  text-decoration:none;
-  font-weight:700;
-  text-align:center;
+}
+
+.meeting-btn:hover{
+  transform:translateX(calc(-20px + 40px * Math.random()));
 }
 
 #typingText{white-space:pre-line;}
@@ -115,7 +109,7 @@ input[type="text"]{
 <div class="room active" id="intro">
   <h1>🔐 Virtual Escape Room</h1>
   <p>
-    Welcome my monkey🖤<br/>
+    Welcome my monkey🖤<br>
     You can't escape from me.... so today, we have: Escape Loom Game – Only for my cutie❤️
   </p>
   <button onclick="goToRoom1()">Start Game 😏</button>
@@ -125,9 +119,9 @@ input[type="text"]{
 <div class="room" id="room1">
   <p><strong>Puzzle 1:</strong> Mao ki favourite thing kya hai? 😏</p>
 
-  <label><input type="radio" name="q1" value="sona"> Sona</label><br/><br/>
-  <label><input type="radio" name="q1" value="uska monkey"> Uska monkey 🐒</label><br/><br/>
-  <label><input type="radio" name="q1" value="study"> Study (Bhaagoooooo)</label><br/><br/>
+  <label><input type="radio" name="q1" value="sona"> Sona</label><br><br>
+  <label><input type="radio" name="q1" value="uska monkey"> Uska monkey 🐒</label><br><br>
+  <label><input type="radio" name="q1" value="study"> Study (Bhaagoooooo)</label><br><br>
   <label><input type="radio" name="q1" value="gym"> Gim</label>
 
   <button class="joke" onclick="checkMCQ1()">Room Unlock Karo</button>
@@ -138,10 +132,8 @@ input[type="text"]{
 <div class="room" id="room2">
   <h2>🧠 Room Two</h2>
   <p>Pressure badh raha hai 😏 Dimag lagao</p>
-
   <p><strong>Puzzle 2:</strong> Wo konsa song tha jispe guard ne aapko dance karte dekha tha aur sharma ke chala gaya tha?</p>
-
-  <input id="answer2" placeholder="Soch ke likho…" />
+  <input id="answer2" placeholder="Soch ke likho…">
   <button onclick="checkAnswer(2,'Shut up and bounce')">Yayayay yaad aaya</button>
   <div class="hint">Hint: Ab toh baaton me rakha kya hai??????</div>
 </div>
@@ -150,21 +142,22 @@ input[type="text"]{
 <div class="room" id="room3">
   <h2>🗝️ Final Lock</h2>
   <p>Bas last cutie💖</p>
-
   <p><strong>Puzzle 3:</strong> Me aapke ghar chhupke se aagya toh aap kya karoge?</p>
-
-  <input id="answer3" placeholder="Final answer…" />
+  <input id="answer3" placeholder="Final answer…">
   <button onclick="checkAnswer(3,'Chijji dunga')">Final Door Unlock Karo</button>
   <div class="hint">Hint: Chijjii chahiye</div>
 </div>
 
 <!-- FINAL -->
-<div class="room final" id="final">
+<div class="room" id="final">
   <h2>🎉 CONGRATULATIONS 🎉</h2>
   <p id="typingText"></p>
-  <a href="YOUR_MEETING_LINK_HERE" target="_blank" class="meeting-link">
+
+  <button class="meeting-btn" onclick="startPrank()">
     👉 Yahan click karo, surprise aapka wait kar raha hai
-  </a>
+  </button>
+
+  <p id="prankText"></p>
 </div>
 
 </div>
@@ -176,27 +169,23 @@ function goToRoom1(){
 }
 
 function checkMCQ1(){
-  const options=document.getElementsByName('q1');
-  let selected='';
-  options.forEach(o=>{if(o.checked) selected=o.value});
-
-  if(selected==='uska monkey'){
-    switchRoom(1,2);
-  }else{
-    alert('Arre nahi yaar 😛 phir se try karo');
-  }
+  const options=[...document.getElementsByName('q1')];
+  const selected=options.find(o=>o.checked)?.value;
+  if(selected==='uska monkey') switchRoom(1,2);
+  else alert('Arre nahi yaar 😛 phir se try karo');
 }
 
-/* ✅ FIXED FUNCTION (case-insensitive) */
+/* ✅ FINAL FIXED ANSWER FUNCTION */
 function checkAnswer(room, correct){
-  const input = document.getElementById('answer' + room);
-  const userAnswer = input.value.trim().toLowerCase();
-  const correctAnswer = correct.toLowerCase();
+  const input=document.getElementById('answer'+room);
+  if(!input) return;
 
-  if(userAnswer === correctAnswer){
-    if(room < 3) switchRoom(room, room + 1);
-    else showFinal();
-  } else {
+  const userAnswer=input.value.trim().toLowerCase().replace(/\s+/g,' ');
+  const correctAnswer=correct.trim().toLowerCase();
+
+  if(userAnswer===correctAnswer){
+    room<3 ? switchRoom(room,room+1) : showFinal();
+  }else{
     alert('Galat 😛 dobara socho');
   }
 }
@@ -216,19 +205,38 @@ Ye escape room toh sirf bahana tha.
 Asli maksad toh aapko surprise dena tha`;
 
   let i=0;
-  const speed=80;
   const el=document.getElementById('typingText');
+  const speed=90;
 
   const typing=setInterval(()=>{
     el.textContent+=text.charAt(i);
     i++;
     if(i===text.length){
       clearInterval(typing);
-      document.querySelector('.meeting-link').style.display='block';
+      document.querySelector('.meeting-btn').style.display='block';
     }
   },speed);
 }
-</script>
 
+/* 🤡 APRIL FOOL PRANK */
+function startPrank(){
+  const text=document.getElementById('prankText');
+  const btn=document.querySelector('.meeting-btn');
+
+  btn.style.display='none';
+  text.textContent='Connecting to surprise... ⏳';
+
+  setTimeout(()=>text.textContent='Almost there... bas thoda sa patience 😌',2000);
+  setTimeout(()=>text.textContent='APRIL FOOL 😛😂\nBut you still get the surprise 💖',4000);
+
+  setTimeout(()=>{
+    text.innerHTML=`<a href="YOUR_REAL_LINK_HERE" target="_blank"
+      style="display:block;margin-top:20px;padding:14px;border-radius:14px;
+      background:#fff;color:#000;text-decoration:none;font-weight:700;text-align:center;">
+      👉 Okay okay, ab seriously click karo 😏
+    </a>`;
+  },6000);
+}
+</script>
 </body>
 </html>
