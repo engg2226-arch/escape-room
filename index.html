@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>You can't escape from me.... so today we have: Escape Room Game – Only for my cutie❤️</title>
+
   <style>
     :root {
       --bg: #0f1220;
@@ -35,10 +36,7 @@
       box-shadow: 0 20px 50px rgba(0,0,0,0.4);
     }
 
-    h1, h2 {
-      text-align: center;
-      margin-top: 0;
-    }
+    h1, h2 { text-align: center; margin-top: 0; }
 
     p {
       color: var(--muted);
@@ -46,25 +44,16 @@
       text-align: center;
     }
 
-    .room {
-      display: none;
-      animation: fadeIn 0.4s ease;
-    }
+    .room { display: none; animation: fadeIn 0.5s ease; }
+    .room.active { display: block; }
 
-    .room.active {
-      display: block;
-    }
-
-    .puzzle {
-      margin-top: 20px;
-    }
+    .puzzle { margin-top: 20px; }
 
     input {
       width: 100%;
       padding: 12px;
       border-radius: 12px;
       border: none;
-      outline: none;
       font-size: 16px;
       margin-top: 10px;
     }
@@ -82,27 +71,14 @@
       cursor: pointer;
     }
 
-    button:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
-    }
-
     .hint {
       margin-top: 12px;
       font-size: 14px;
       color: #ffd1e5;
     }
 
-    .final {
-      text-align: center;
-    }
-
-    .final h2 {
-      color: var(--accent);
-    }
-
     .meeting-link {
-      display: block;
+      display: none;
       margin-top: 20px;
       padding: 14px;
       border-radius: 14px;
@@ -110,99 +86,133 @@
       color: #000;
       text-decoration: none;
       font-weight: 600;
+      animation: fadeIn 0.6s ease;
     }
 
     @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
+      from { opacity: 0; transform: translateY(12px); }
       to { opacity: 1; transform: translateY(0); }
     }
   </style>
 </head>
+
 <body>
-  <div class="app">
+<div class="app">
 
-    <!-- ROOM 1 -->
-    <div class="room active" id="room1">
-      <h1>🔐 Virtual Escape Room</h1>
-      <p>Welcome my monkey🖤<br/>Isme mao ne think nahi kia...warna uske knees me pain hone lagta na </p>
-      <div class="puzzle">
-        <p><strong>Puzzle 1:</strong> Mao ki favourite thing kya hai? 😏</p>
+<!-- ROOM 1 -->
+<div class="room active" id="room1">
+  <h1>🔐 Virtual Escape Room</h1>
+  <p>Welcome my monkey🖤<br/>Isme mao ne think nahi kia...warna uske knees me pain hone lagta na </p>
 
-        <div style="margin-top:12px; text-align:left;">
-          <label><input type="radio" name="q1" value="sona" /> Sona</label><br/><br/>
-          <label><input type="radio" name="q1" value="uska monkey" /> Uska monkey 🐒</label><br/><br/>
-          <label><input type="radio" name="q1" value="study" /> Study (Bhaagoooooo)</label><br/><br/>
-          <label><input type="radio" name="q1" value="gym" /> Gim</label>
-        </div>
+  <div class="puzzle">
+    <p><strong>Puzzle 1:</strong> Mao ki favourite thing kya hai? 😏</p>
 
-        <button onclick="checkMCQ1()">Room Unlock Karo</button>
-        <div class="hint">Hint: Answer thoda obvious hai 😌</div>
-      </div>
+    <div style="margin-top:12px; text-align:left;">
+      <label><input type="radio" name="q1" value="sona" /> Sona</label><br/><br/>
+      <label><input type="radio" name="q1" value="uska monkey" /> Uska monkey 🐒</label><br/><br/>
+      <label><input type="radio" name="q1" value="study" /> Study (Bhaagoooooo)</label><br/><br/>
+      <label><input type="radio" name="q1" value="gym" /> Gim</label>
     </div>
 
-    <!-- ROOM 2 -->
-
-    <div class="room" id="room2">
-      <h2>🧠 Room Two</h2>
-      <p>Pressure badh raha hai 😏 Dimag lagao </p>
-      <div class="puzzle">
-        <p><strong>Puzzle 2:</strong> Wo konsa song tha jispe guard ne aapko dance karte dekha tha aur sharma ke chala gaya tha?</p>
-        <input id="answer2" placeholder="Soch ke likho…" />
-        <button onclick="checkAnswer(2, 'Shut up and bounce')">Code Crack Karo</button>
-        <div class="hint">Hint: Ab toh baaton me rakha kya hai.</div>
-      </div>
-    </div>
-
-    <!-- ROOM 3 -->
-    <div class="room" id="room3">
-      <h2>🗝️ Final Lock</h2>
-      <p>Bas thoda sa aur… dil + dimaag dono chahiye 💖</p>
-      <div class="puzzle">
-        <p><strong>Puzzle 3:</strong> Me aapke ghar chhupke se aagya toh aap kya karoge? </p>
-        <input id="answer3" placeholder="Final answer…" />
-        <button onclick="checkAnswer(3, 'Chijji dunga')">Final Door Unlock Karo</button>
-        <div class="hint">Hint: Chijjii chahiye </div>
-      </div>
-    </div>
-
-    <!-- FINAL PAGE -->
-    <div class="room final" id="final">
-      <h2>🎉 CONGRATULATIONS 🎉</h2>
-      <p>
-        CONGRATULATIONSSSSSSSSSSSSS MY BOY💖<br/><br/>
-        I'm so so so so so so (bahut SO lia) proud of you🥺.<br/>
-        Ye escape room toh sirf bahana tha. Asli maksad toh aapko meeting ke liye bulana tha
-      </p>
-      <a href="YOUR_MEETING_LINK_HERE" class="meeting-link" target="_blank">
-        👉 Yahan click karo, surprise (ME obviously) aapka wait kar raha hai
-      </a>
-    </div>
-
+    <button onclick="checkMCQ1()">Room Unlock Karo</button>
+    <div class="hint">Hint: Answer thoda obvious hai 😌</div>
   </div>
+</div>
 
-  <script>
-    function checkMCQ1() {
-      const options = document.getElementsByName('q1');
-      let selected = '';
-      options.forEach(opt => { if (opt.checked) selected = opt.value; });
+<!-- ROOM 2 -->
+<div class="room" id="room2">
+  <h2>🧠 Room Two</h2>
+  <p>Pressure badh raha hai 😏 Dimag lagao </p>
 
-      if (selected === 'uska monkey') {
-        document.getElementById('room1').classList.remov(room, correct) {
-      const input = document.getElementById('answer' + room);
-      if (!input) return;
+  <div class="puzzle">
+    <p><strong>Puzzle 2:</strong> Wo konsa song tha jispe guard ne aapko dance karte dekha tha aur sharma ke chala gaya tha?</p>
+    <input id="answer2" placeholder="Soch ke likho…" />
+    <button onclick="checkAnswer(2, 'shut up and bounce')">Code Crack Karo</button>
+    <div class="hint">Hint: Ab toh baaton me rakha kya hai.</div>
+  </div>
+</div>
 
-      const value = input.value.trim().toLowerCase();
-      if (value === correct) {
-        document.getElementById('room' + room).classList.remove('active');
-        if (room < 3) {
-          document.getElementById('room' + (room + 1)).classList.add('active');
-        } else {
-          document.getElementById('final').classList.add('active');
-        }
-      } else {
-        alert('Arre nahi yaar 😛 phir se try karo');
-      }
+<!-- ROOM 3 -->
+<div class="room" id="room3">
+  <h2>🗝️ Final Lock</h2>
+  <p>Bas thoda sa aur… dil + dimaag dono chahiye 💖</p>
+
+  <div class="puzzle">
+    <p><strong>Puzzle 3:</strong> Me aapke ghar chhupke se aagya toh aap kya karoge? </p>
+    <input id="answer3" placeholder="Final answer…" />
+    <button onclick="checkAnswer(3, 'chijji dunga')">Final Door Unlock Karo</button>
+    <div class="hint">Hint: Chijjii chahiye </div>
+  </div>
+</div>
+
+<!-- FINAL -->
+<div class="room final" id="final">
+  <h2>🎉 CONGRATULATIONS 🎉</h2>
+  <p id="typingText"></p>
+
+  <a href="YOUR_MEETING_LINK_HERE" class="meeting-link" target="_blank">
+    👉 Yahan click karo, surprise (ME obviously) aapka wait kar raha hai
+  </a>
+</div>
+
+</div>
+
+<script>
+function showRoom(from, to) {
+  document.getElementById(from).classList.remove('active');
+  document.getElementById(to).classList.add('active');
+}
+
+function checkMCQ1() {
+  const options = document.getElementsByName('q1');
+  let selected = '';
+  options.forEach(o => { if (o.checked) selected = o.value; });
+
+  if (selected === 'uska monkey') {
+    showRoom('room1', 'room2');
+  } else {
+    alert('Arre nahi yaar 😛 phir se try karo');
+  }
+}
+
+function checkAnswer(room, correct) {
+  const input = document.getElementById('answer' + room);
+  if (!input) return;
+
+  if (input.value.trim().toLowerCase() === correct) {
+    if (room < 3) showRoom('room' + room, 'room' + (room + 1));
+    else {
+      showRoom('room3', 'final');
+      startTyping();
     }
-  </script>
+  } else {
+    alert('Arre nahi yaar 😛 phir se try karo');
+  }
+}
+
+/* 🎬 Typing Effect */
+function startTyping() {
+  const text = `CONGRATULATIONSSSSSSSSSSSSS MY BOY💖
+
+I'm so so so so so so (bahut SO lia) proud of you🥺.
+Ye escape room toh sirf bahana tha. Asli maksad toh aapko meeting ke liye bulana tha`;
+
+  const el = document.getElementById('typingText');
+  const link = document.querySelector('.meeting-link');
+  let i = 0;
+
+  function type() {
+    if (i < text.length) {
+      el.innerHTML += text[i] === '\n' ? '<br/>' : text[i];
+      i++;
+      setTimeout(type, 35);
+    } else {
+      link.style.display = 'block';
+    }
+  }
+  type();
+}
+</script>
+
 </body>
 </html>
