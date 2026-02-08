@@ -160,28 +160,28 @@ input::placeholder{color:#bbb}
   <div class="monkey-field"></div>
   <div class="illustration">🔐</div>
   <h1>Virtual Escape Room</h1>
-  <p>Welcome my monkey 🖤<br>Escape Loom – only for my cutie ❤️</p>
+  <p>Welcome my monkey 🖤<br> Aap mujhse escape nhi kar skte, per ye Game toh khel sakte ho cutie ❤️</p>
   <button id="startBtn">Start Game 😏</button>
 </div>
 
 <!-- ROOM 1 -->
 <div class="room" id="room1">
   <div class="illustration">🐒</div>
-  <p><strong>Puzzle 1:</strong> Mao ki favourite cheez kya hai?</p>
+  <p><strong>Puzzle 1:</strong> Mao ki favourite thing kya hai?</p>
   <label><input type="radio" name="q1" value="sona"> Sona</label><br><br>
   <label><input type="radio" name="q1" value="uska monkey"> Uska monkey 🐒</label><br><br>
   <label><input type="radio" name="q1" value="study"> Study</label><br><br>
   <label><input type="radio" name="q1" value="gym"> Gim</label>
   <button class="joke" id="mcqBtn">Unlock Room</button>
-  <div class="hint">Hint: zyada sochna mana hai</div>
+  <div class="hint">Hint: Naam ki</div>
 </div>
 
 <!-- ROOM 2 -->
 <div class="room" id="room2">
   <div class="illustration">🎵</div>
   <h2>Room Two</h2>
-  <p>Wo konsa song tha?</p>
-  <input id="answer2" placeholder="Soch ke likho…">
+  <p>Wo konsa song tha jispe aapko guard ne dance karte hue dekha tha aur chala gya sharma ke?</p>
+  <input id="answer2" placeholder="Ab toh baaton me rakha kya hai??">
   <button id="room2Btn">Yaad aaya 😏</button>
 </div>
 
@@ -189,15 +189,15 @@ input::placeholder{color:#bbb}
 <div class="room" id="room3">
   <div class="illustration">🏠</div>
   <h2>Final Lock</h2>
-  <p>Main chupke se ghar aa jaun toh?</p>
-  <input id="answer3" placeholder="Final answer…">
+  <p>Main chupke se ghar aa jaun toh aap kya croge?</p>
+  <input id="answer3" placeholder="Chijji chahiye">
   <button id="room3Btn">Final Unlock</button>
 </div>
 
 <!-- FINAL -->
 <div class="room" id="final">
   <div class="illustration">💖</div>
-  <h2>CONGRATULATIONS</h2>
+  <h2>YAYAYAYYAYAYAYAY</h2>
   <p id="typingText"></p>
   <button class="meeting-btn" id="prankBtn">👉 Yahan click karo</button>
   <p id="prankText"></p>
@@ -242,7 +242,7 @@ document.addEventListener('DOMContentLoaded',()=>{
   document.getElementById('startBtn').onclick=()=>{show('room1');setProgress(33)};
   document.getElementById('mcqBtn').onclick=()=>{
     const v=[...document.getElementsByName('q1')].find(o=>o.checked)?.value;
-    v==='uska monkey'?(show('room2'),setProgress(66)):alert('Arre nahi 😛');
+    v==='uska monkey'?(show('room2'),setProgress(66)):alert('Nawwwwwwwww');
   };
   document.getElementById('room2Btn').onclick=()=>{
     document.getElementById('answer2').value.trim().toLowerCase()==='shut up and bounce'
@@ -250,12 +250,12 @@ document.addEventListener('DOMContentLoaded',()=>{
   };
   document.getElementById('room3Btn').onclick=()=>{
     if(document.getElementById('answer3').value.trim().toLowerCase()!=='chijji dunga')
-      return alert('Galat cutie firse try karo');
+      return alert('Wrong cutie firse try karo');
 
     show('final'); setProgress(100);
     setInterval(hearts,600);   // ❤️ START HEARTS
 
-    const text=`YAYAYAY 💖\n\nEscape room bas bahana tha.\nAsli maksad toh aapko surprise dena tha 😌`;
+    const text=`YAYAYAY 💖\n\nYe game toh bas bahana tha.\nAsli maksad toh aapko surprise dena tha 😌`;
     let i=0,el=document.getElementById('typingText');
     const t=setInterval(()=>{
       el.textContent+=text[i++];
