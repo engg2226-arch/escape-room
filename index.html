@@ -9,6 +9,7 @@
 :root{
   --card:#1c2040;
   --accent:#ff5fa2;
+  --accent-soft:#ff8fbe;
   --text:#f5f5f5;
   --muted:#b6b6d6;
 }
@@ -17,8 +18,9 @@
 
 body{
   margin:0;
-  background:linear-gradient(160deg,#0f1220,#1a1f3a);
   min-height:100vh;
+  background:
+    radial-gradient(circle at top,#2b3166,#0f1220 60%);
   display:flex;
   justify-content:center;
   align-items:center;
@@ -26,83 +28,120 @@ body{
   color:var(--text);
 }
 
+/* APP CARD */
 .app{
   width:100%;
   max-width:420px;
-  background:var(--card);
-  border-radius:22px;
-  padding:22px;
-  box-shadow:0 25px 60px rgba(0,0,0,.5);
+  background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,0));
+  backdrop-filter:blur(18px);
+  border-radius:26px;
+  padding:24px;
+  box-shadow:
+    0 30px 80px rgba(0,0,0,.55),
+    inset 0 0 0 1px rgba(255,255,255,.08);
   position:relative;
   overflow:hidden;
 }
 
-.room{display:none; position:relative;}
+/* PROGRESS */
+.progress{
+  height:6px;
+  background:rgba(255,255,255,.1);
+  border-radius:999px;
+  margin-bottom:18px;
+  overflow:hidden;
+}
+.progress span{
+  display:block;
+  height:100%;
+  width:0%;
+  background:linear-gradient(90deg,var(--accent),var(--accent-soft));
+  transition:.6s ease;
+}
+
+/* ROOMS */
+.room{
+  display:none;
+  animation:fadeUp .6s ease;
+}
 .room.active{display:block;}
 
-h1,h2{text-align:center;}
-p{text-align:center;color:var(--muted);line-height:1.5;}
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(18px)}
+  to{opacity:1;transform:none}
+}
 
+h1,h2{text-align:center;margin:0 0 10px}
+p{text-align:center;color:var(--muted);line-height:1.6}
+
+/* BUTTONS */
 button{
   width:100%;
-  padding:14px;
-  margin-top:16px;
+  padding:15px;
+  margin-top:18px;
   border:none;
-  border-radius:16px;
-  background:var(--accent);
+  border-radius:18px;
+  background:linear-gradient(135deg,var(--accent),var(--accent-soft));
   color:#fff;
   font-size:16px;
   font-weight:700;
   cursor:pointer;
+  box-shadow:0 12px 30px rgba(255,95,162,.35);
+  transition:.25s ease;
 }
+button:hover{transform:translateY(-2px)}
+button:active{transform:scale(.97)}
 
-button.joke:hover{transform:translateX(14px)}
+button.joke:hover{transform:translateX(12px)}
 
+/* INPUTS */
 input[type="radio"]{
-  transform:scale(1.6);
+  transform:scale(1.4);
   margin-right:10px;
 }
-
 input[type="text"]{
   width:100%;
-  padding:12px;
-  border-radius:12px;
+  padding:14px;
+  border-radius:14px;
   border:none;
-  margin-top:10px;
-  font-size:16px;
-}
-
-.hint{
   margin-top:12px;
+  font-size:16px;
+  background:rgba(255,255,255,.08);
+  color:#fff;
+}
+input::placeholder{color:#bbb}
+
+/* HINT */
+.hint{
+  margin-top:14px;
   font-size:14px;
   color:#ffd1e5;
+  text-align:center;
 }
 
-.meeting-btn{display:none;}
+/* FINAL */
+.meeting-btn{display:none}
+#typingText{white-space:pre-line}
 
-#typingText{white-space:pre-line;}
-
-/* 🐒 MONKEY CHAOS (INTRO ONLY) */
+/* 🐒 MONKEYS (LESS CHAOS) */
 .monkey-field{
   position:absolute;
   inset:0;
   pointer-events:none;
   z-index:0;
 }
-
 .monkey{
   position:absolute;
-  font-size:2.4rem;
-  opacity:0.18;
+  font-size:2rem;
+  opacity:.14;
   animation:floatMonkey linear infinite;
 }
-
 @keyframes floatMonkey{
-  from{ transform:translateY(110%) rotate(0deg); }
-  to{ transform:translateY(-130%) rotate(360deg); }
+  from{transform:translateY(120%) rotate(0deg)}
+  to{transform:translateY(-140%) rotate(360deg)}
 }
 
-/* keep intro content above monkeys */
+/* KEEP CONTENT ABOVE */
 #intro > *{
   position:relative;
   z-index:2;
@@ -113,47 +152,50 @@ input[type="text"]{
 <body>
 <div class="app">
 
+<div class="progress"><span id="bar"></span></div>
+
 <!-- INTRO -->
 <div class="room active" id="intro">
   <div class="monkey-field"></div>
 
   <h1>🔐 Virtual Escape Room</h1>
   <p>
-    Welcome my monkey🖤<br>
-    You can't escape from me.... so today, we have: Escape Loom Game – Only for my cutie❤️
+    Welcome my monkey 🖤<br>
+    You can't escape from me…<br>
+    Escape Loom – only for my cutie ❤️
   </p>
   <button id="startBtn">Start Game 😏</button>
 </div>
 
 <!-- ROOM 1 -->
 <div class="room" id="room1">
-  <p><strong>Puzzle 1:</strong> Mao ki favourite thing kya hai? 😏</p>
+  <p><strong>Puzzle 1:</strong><br>Mao ki favourite cheez kya hai? 😏</p>
 
   <label><input type="radio" name="q1" value="sona"> Sona</label><br><br>
   <label><input type="radio" name="q1" value="uska monkey"> Uska monkey 🐒</label><br><br>
-  <label><input type="radio" name="q1" value="study"> Study (Bhaagoooooo)</label><br><br>
+  <label><input type="radio" name="q1" value="study"> Study (bhaagoooo)</label><br><br>
   <label><input type="radio" name="q1" value="gym"> Gim</label>
 
   <button class="joke" id="mcqBtn">Room Unlock Karo</button>
-  <div class="hint">Hint: Isme mao ne think nahi kia...warna uske knees me pain hone lagta na</div>
+  <div class="hint">Hint: zyada sochne se knees dard karne lagte hain</div>
 </div>
 
 <!-- ROOM 2 -->
 <div class="room" id="room2">
   <h2>🧠 Room Two</h2>
-  <p>Pressure badh raha hai 😏 Dimag lagao</p>
-  <p><strong>Puzzle 2:</strong> Wo konsa song tha jispe guard ne aapko dance karte dekha tha aur sharma ke chala gaya tha?</p>
+  <p><strong>Puzzle 2:</strong><br>
+  Wo konsa song tha jispe guard ne dance dekh liya tha? 😳</p>
   <input id="answer2" placeholder="Soch ke likho…">
-  <button id="room2Btn">Yayayay yaad aaya</button>
+  <button id="room2Btn">Yaad aaya 😏</button>
 </div>
 
 <!-- ROOM 3 -->
 <div class="room" id="room3">
   <h2>🗝️ Final Lock</h2>
-  <p>Bas last cutie💖</p>
-  <p><strong>Puzzle 3:</strong> Me aapke ghar chhupke se aagya toh aap kya karoge?</p>
+  <p><strong>Puzzle 3:</strong><br>
+  Main chupke se ghar aa jaun toh?</p>
   <input id="answer3" placeholder="Final answer…">
-  <button id="room3Btn">Final Door Unlock Karo</button>
+  <button id="room3Btn">Final Door Unlock</button>
 </div>
 
 <!-- FINAL -->
@@ -169,46 +211,51 @@ input[type="text"]{
 <script>
 document.addEventListener('DOMContentLoaded',()=>{
 
-  /* 🐒 generate intro monkeys */
-  const emojis=["🐒","🐵","🙈","🙉","🙊"];
+  /* 🐒 FEWER MONKEYS */
+  const emojis=["🐒","🐵","🙈"];
   const field=document.querySelector('.monkey-field');
 
-  for(let i=0;i<26;i++){
+  for(let i=0;i<14;i++){   // REDUCED FROM 26 → 14
     const m=document.createElement('div');
     m.className='monkey';
     m.textContent=emojis[Math.floor(Math.random()*emojis.length)];
     m.style.left=Math.random()*100+'%';
-    m.style.animationDuration=10+Math.random()*20+'s';
-    m.style.fontSize=1.6+Math.random()*2+'rem';
+    m.style.animationDuration=18+Math.random()*20+'s';
+    m.style.fontSize=1.8+Math.random()*1.4+'rem';
     field.appendChild(m);
   }
 
-  const show=(id)=>{
+  const bar=document.getElementById('bar');
+  const setProgress=p=>bar.style.width=p+'%';
+
+  const show=id=>{
     document.querySelectorAll('.room').forEach(r=>r.classList.remove('active'));
     document.getElementById(id).classList.add('active');
   };
 
-  document.getElementById('startBtn').onclick=()=>show('room1');
+  document.getElementById('startBtn').onclick=()=>{
+    show('room1'); setProgress(33);
+  };
 
   document.getElementById('mcqBtn').onclick=()=>{
-    const selected=[...document.getElementsByName('q1')].find(o=>o.checked)?.value;
-    selected==='uska monkey' ? show('room2') : alert('Arre nahi yaar 😛 phir se try karo');
+    const v=[...document.getElementsByName('q1')].find(o=>o.checked)?.value;
+    v==='uska monkey'? (show('room2'),setProgress(66)) : alert('Arre nahi 😛');
   };
 
   document.getElementById('room2Btn').onclick=()=>{
-    const a=document.getElementById('answer2').value.trim().toLowerCase().replace(/\s+/g,' ');
-    a==='shut up and bounce' ? show('room3') : alert('Galat 😛');
+    const a=document.getElementById('answer2').value.trim().toLowerCase();
+    a==='shut up and bounce'? show('room3') : alert('Galat 😛');
   };
 
   document.getElementById('room3Btn').onclick=()=>{
-    const a=document.getElementById('answer3').value.trim().toLowerCase().replace(/\s+/g,' ');
+    const a=document.getElementById('answer3').value.trim().toLowerCase();
     if(a!=='chijji dunga') return alert('Galat 😛');
 
-    show('final');
-    const text=`YAYAYYAYAYAYAY💖
+    show('final'); setProgress(100);
+    const text=`YAYAYAY 💖
 
-Ye escape room toh sirf bahana tha.
-Asli maksad toh aapko surprise dena tha`;
+Ye escape room bas bahana tha.
+Asli maksad toh aapko surprise dena tha 😌`;
     let i=0;
     const el=document.getElementById('typingText');
     const t=setInterval(()=>{
@@ -217,12 +264,12 @@ Asli maksad toh aapko surprise dena tha`;
         clearInterval(t);
         document.getElementById('prankBtn').style.display='block';
       }
-    },90);
+    },85);
   };
 
   document.getElementById('prankBtn').onclick=()=>{
     document.getElementById('prankText').textContent=
-      'FEBRUARY ME APRIL FOOL BANAYAAAAA 🤡💖';
+      'FEBRUARY ME APRIL FOOL BANAYA 🤡💖';
   };
 
 });
