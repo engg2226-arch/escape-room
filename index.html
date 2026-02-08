@@ -33,9 +33,11 @@ body{
   border-radius:22px;
   padding:22px;
   box-shadow:0 25px 60px rgba(0,0,0,.5);
+  position:relative;
+  overflow:hidden;
 }
 
-.room{display:none;}
+.room{display:none; position:relative;}
 .room.active{display:block;}
 
 h1,h2{text-align:center;}
@@ -79,6 +81,32 @@ input[type="text"]{
 .meeting-btn{display:none;}
 
 #typingText{white-space:pre-line;}
+
+/* 🐒 MONKEY CHAOS (INTRO ONLY) */
+.monkey-field{
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  z-index:0;
+}
+
+.monkey{
+  position:absolute;
+  font-size:2.4rem;
+  opacity:0.18;
+  animation:floatMonkey linear infinite;
+}
+
+@keyframes floatMonkey{
+  from{ transform:translateY(110%) rotate(0deg); }
+  to{ transform:translateY(-130%) rotate(360deg); }
+}
+
+/* keep intro content above monkeys */
+#intro > *{
+  position:relative;
+  z-index:2;
+}
 </style>
 </head>
 
@@ -87,6 +115,8 @@ input[type="text"]{
 
 <!-- INTRO -->
 <div class="room active" id="intro">
+  <div class="monkey-field"></div>
+
   <h1>🔐 Virtual Escape Room</h1>
   <p>
     Welcome my monkey🖤<br>
@@ -138,6 +168,20 @@ input[type="text"]{
 
 <script>
 document.addEventListener('DOMContentLoaded',()=>{
+
+  /* 🐒 generate intro monkeys */
+  const emojis=["🐒","🐵","🙈","🙉","🙊"];
+  const field=document.querySelector('.monkey-field');
+
+  for(let i=0;i<26;i++){
+    const m=document.createElement('div');
+    m.className='monkey';
+    m.textContent=emojis[Math.floor(Math.random()*emojis.length)];
+    m.style.left=Math.random()*100+'%';
+    m.style.animationDuration=10+Math.random()*20+'s';
+    m.style.fontSize=1.6+Math.random()*2+'rem';
+    field.appendChild(m);
+  }
 
   const show=(id)=>{
     document.querySelectorAll('.room').forEach(r=>r.classList.remove('active'));
